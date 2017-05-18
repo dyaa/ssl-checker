@@ -1,0 +1,34 @@
+{
+    "name": "ssl-checker",
+    "version": "1.0.0",
+    "description": "ssl-checker",
+    "main": "index.js",
+    "scripts": {
+        "lint": "eslint .",
+        "test": "mocha --reporter spec --require babel-register",
+        "posttest": "npm run lint && nsp check"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/dyaa/ssl-checker.git"
+    },
+    "keywords": [
+        "ssl",
+        "checker"
+    ],
+    "author": "Dyaa Eldin <mail@dyaa.me> (https://dyaa.me)",
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/dyaa/ssl-checker/issues"
+    },
+    "homepage": "https://github.com/dyaa/ssl-checker#readme",
+    "devDependencies": {
+        "babel-core": "^6.24.1",
+        "babel-eslint": "^7.2.3",
+        "babel-preset-es2015": "^6.24.1",
+        "chai": "^3.5.0",
+        "eslint": "^3.19.0",
+        "mocha": "^3.4.1",
+        "nsp": "^2.6.3"
+    }
+}
