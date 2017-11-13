@@ -15,7 +15,8 @@ module.exports = (host, method, port) => {
 	const options = {
 		host: host,
 		method: method || 'HEAD',
-		port: port || 443
+		port: port || 443,
+		rejectUnauthorized: false
 	};
 
 	let numericPort = (!isNaN(parseFloat(options.port)) && isFinite(options.port));
