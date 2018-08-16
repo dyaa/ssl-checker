@@ -15,9 +15,16 @@ $ yarn add ssl-checker
 ## Usage
 
 ```javascript
-var sslChecker = require("ssl-checker")
+const sslChecker =  require("ssl-checker");
 
-sslChecker('dyaa.me').then(result => console.info(result));
+sslChecker("github.com").then(console.log).catch(console.error);
+sslChecker("github").then(console.log).catch((err) => {
+  if (err.code === 'ENOTFOUND') {
+    console.log("Please get back only or fix hostname");
+  } else {
+    console.error(err);
+  }
+});
 ```
 
 ## Options

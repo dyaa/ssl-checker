@@ -16,8 +16,7 @@ module.exports = (host, method, port) => {
 		host: host,
 		method: method || 'HEAD',
 		port: port || 443,
-		rejectUnauthorized: false,
-		agent: false,
+		rejectUnauthorized: false
 	};
 
 	let numericPort = (!isNaN(parseFloat(options.port)) && isFinite(options.port));
@@ -25,8 +24,8 @@ module.exports = (host, method, port) => {
 	let daysBetween = (from, to) => Math.round(Math.abs((+from) - (+to))/8.64e7);
 
 	if (options.host === null || options.port === null) throw new Error("Invalid host or port");
-	try {
-		return new Promise(function(resolve, reject) {
+	return new Promise(function(resolve, reject) {
+		try {
 			const req = https.request(options, res => {
 				let { valid_from, valid_to } = res.connection.getPeerCertificate();
 				resolve({
@@ -37,9 +36,8 @@ module.exports = (host, method, port) => {
 			});
 			req.on('error', (e) => { reject(e) });
 			req.end();
-		}).catch(console.error);
-
-	} catch (e) {
-		throw new Error(e)
-	}
+		} catch (e) {
+			reject(e);
+		}
+	})
 };
