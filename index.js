@@ -28,11 +28,20 @@ module.exports = (host, method, port) => {
 	try {
 		return new Promise(function(resolve, reject) {
 			const req = https.request(options, res => {
+
 				let { valid_from, valid_to } = res.connection.getPeerCertificate();
+				let days_remaining = daysBetween(new Date(), new Date(valid_to))
+				
+				// Check if a certificate has already expired
+				let now = new Date();
+				if (new Date(valid_to).getTime() < now.getTime()){
+					days_remaining = -days_remaining;
+				}
+
 				resolve({
 					valid_from: valid_from,
 					valid_to: valid_to,
-					days_remaining: daysBetween(new Date(), new Date(valid_to))
+					days_remaining: days_remaining
 				});
 			});
 			req.on('error', (e) => { reject(e) });

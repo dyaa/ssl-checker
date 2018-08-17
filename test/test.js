@@ -10,4 +10,10 @@ describe('SSL Checker', () => {
 			return expect(data).to.have.property('valid_from');
 		}).catch(console.error);
 	});
+
+	it('should return negative days remaining for expired certs ', () => {
+		return checker('expired.badssl.com').then(data => {
+			return expect(data.days_remaining).below(0);
+		}).catch(console.error);
+	});
 });
