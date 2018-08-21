@@ -43,7 +43,7 @@ sslChecker('dyaa.me', 'GET', 443).then(result => console.info(result));
 
 #### License
 
-Copylefted (c) 2017 [Dyaa Eldin Moustafa][1] Licensed under the [MIT license][2].
+Copylefted (c) 2018 [Dyaa Eldin Moustafa][1] Licensed under the [MIT license][2].
 
 
   [1]: https://dyaa.me/
