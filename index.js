@@ -1,6 +1,6 @@
 'use strict';
 
-var https = require('https');
+const https = require('https');
 
 /**
  * Checks SSL Expiry date
@@ -20,17 +20,17 @@ module.exports = (host, method, port) => {
 		agent: false,
 	};
 
-	let numericPort = (!isNaN(parseFloat(options.port)) && isFinite(options.port));
+	const numericPort = (!isNaN(parseFloat(options.port)) && isFinite(options.port));
+	const daysBetween = (from, to) => Math.round(Math.abs((+from) - (+to))/8.64e7);
+
 	if (numericPort === false) throw new Error("Invalid port");
-	let daysBetween = (from, to) => Math.round(Math.abs((+from) - (+to))/8.64e7);
 
 	if (options.host === null || options.port === null) throw new Error("Invalid host or port");
-	return new Promise(function(resolve, reject) {
+	return new Promise((resolve, reject) => {
 		try {
 			const req = https.request(options, res => {
-
-				let { valid_from, valid_to } = res.connection.getPeerCertificate();
-				let days_remaining = daysBetween(new Date(), new Date(valid_to))
+				const { valid_from, valid_to } = res.connection.getPeerCertificate();
+				let days_remaining = daysBetween(new Date(), new Date(valid_to));
 				
 				// Check if a certificate has already expired
 				let now = new Date();
@@ -39,12 +39,13 @@ module.exports = (host, method, port) => {
 				}
 
 				resolve({
-					valid_from: valid_from,
-					valid_to: valid_to,
-					days_remaining: days_remaining
+					valid: res.socket.authorized,
+					valid_from,
+					valid_to,
+					days_remaining,
 				});
 			});
-			req.on('error', (e) => { reject(e) });
+			req.on('error', e => reject(e));
 			req.end();
 		} catch (e) {
 			reject(e);

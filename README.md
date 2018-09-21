@@ -3,7 +3,7 @@
 [![wercker status](https://app.wercker.com/status/d9c8e99c45ac59552e86375ac942697b/s/master "wercker status")](https://app.wercker.com/project/byKey/d9c8e99c45ac59552e86375ac942697b) [![npm version](https://badge.fury.io/js/ssl-checker.svg)](https://badge.fury.io/js/ssl-checker) [![npm](https://img.shields.io/npm/dt/ssl-checker.svg)](https://github.com/dyaa/node-ssl-checker)
 
 ## Installation
-Simply add Caporal as a dependency:
+Simply add `ssl-checker` as a dependency:
 ```bash
 $ npm install ssl-checker --save # npm i -s ssh-checker
 
@@ -14,7 +14,7 @@ $ yarn add ssl-checker
 ## Usage
 
 ```javascript
-const sslChecker =  require("ssl-checker");
+import sslChecker from 'ssl-checker';
 
 sslChecker("github.com").then(console.log).catch(console.error);
 sslChecker("github").then(console.log).catch((err) => {
@@ -29,7 +29,7 @@ sslChecker("github").then(console.log).catch((err) => {
 ## Options
 | Option | Default  |                         |
 | ------ | -------- | ----------------------- |
-| Host   | Required | your host *ex. dyaa.me* |
+| Host   | Required | your host *ex. github.com* |
 | Method | HEAD     | can be GET too          |
 | Port   | 443      | Your ssl port number    |
 
@@ -41,6 +41,7 @@ sslChecker('dyaa.me', 'GET', 443).then(result => console.info(result));
 ## Response Example
 ```json
 {
+	"valid": true,
 	"days_remaining" : 90,
 	"valid_from" : "issue date",
 	"valid_to" : "expiry date"
