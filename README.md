@@ -5,7 +5,7 @@
 ## Installation
 Simply add `ssl-checker` as a dependency:
 ```bash
-$ npm install ssl-checker --save # npm i -s ssh-checker
+$ npm install ssl-checker --save # npm i -s ssl-checker
 
 # Or if you are using yarn (https://yarnpkg.com/lang/en/)
 $ yarn add ssl-checker
