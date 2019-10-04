@@ -1,57 +1,57 @@
 # Node SSL Checker
 
-[![wercker status](https://app.wercker.com/status/d9c8e99c45ac59552e86375ac942697b/s/master "wercker status")](https://app.wercker.com/project/byKey/d9c8e99c45ac59552e86375ac942697b) [![npm version](https://badge.fury.io/js/ssl-checker.svg)](https://badge.fury.io/js/ssl-checker) [![npm](https://img.shields.io/npm/dt/ssl-checker.svg)](https://github.com/dyaa/node-ssl-checker)
+[![Build Status](https://github.com/dyaa/ssl-checker/workflows/test-sslChecker/badge.svg)](https://github.com/dyaa/ssl-checker/actions)
+[![npm version](https://badge.fury.io/js/ssl-checker.svg)](https://badge.fury.io/js/ssl-checker) [![npm](https://img.shields.io/npm/dt/ssl-checker.svg)](https://github.com/dyaa/node-ssl-checker)
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/4544a598aa6b4bc99883ef655e1dd90f)](https://www.codacy.com/manual/dyaa/node-ssl-checker?utm_source=github.com&utm_medium=referral&utm_content=dyaa/node-ssl-checker&utm_campaign=Badge_Grade)
+[![Codacy Badge](https://api.codacy.com/project/badge/Coverage/4544a598aa6b4bc99883ef655e1dd90f)](https://www.codacy.com/manual/dyaa/node-ssl-checker?utm_source=github.com&utm_medium=referral&utm_content=dyaa/node-ssl-checker&utm_campaign=Badge_Coverage)
 
 ## Installation
+
 Simply add `ssl-checker` as a dependency:
+
 ```bash
 $ npm install ssl-checker --save # npm i -s ssl-checker
 
-# Or if you are using yarn (https://yarnpkg.com/lang/en/)
+# Or if you prefer using yarn (https://yarnpkg.com/lang/en/)
 $ yarn add ssl-checker
 ```
 
 ## Usage
 
-```javascript
-import sslChecker from 'ssl-checker';
+```ts
+import sslChecker from "ssl-checker";
 
-sslChecker("github.com").then(console.log).catch(console.error);
-sslChecker("github").then(console.log).catch((err) => {
-  if (err.code === 'ENOTFOUND') {
-    console.log("Please get back only or fix hostname");
-  } else {
-    console.error(err);
-  }
-});
+const getSslDetails = async (hostname: string) =>
+  await sslChecker(hostname`ex. badssl.com`);
 ```
 
 ## Options
-| Option | Default  |                         |
-| ------ | -------- | ----------------------- |
-| Host   | Required | your host *ex. github.com* |
-| Method | HEAD     | can be GET too          |
-| Port   | 443      | Your ssl port number    |
 
-```javascript
-var sslChecker = require("ssl-checker")
-sslChecker('dyaa.me', 'GET', 443).then(result => console.info(result));
+| Option | Default |                                                    |
+| ------ | ------- | -------------------------------------------------- |
+| method | HEAD    | can be GET too                                     |
+| port   | 443     | Your ssl entrypoint                                |
+| agent  | HEAD    | I dont know why but if you'd like provide agent id |
+|        |
+
+```ts
+sslChecker("dyaa.me", { method: "GET", port: 443 }).then(console.info);
 ```
 
 ## Response Example
+
 ```json
 {
-	"valid": true,
-	"days_remaining" : 90,
-	"valid_from" : "issue date",
-	"valid_to" : "expiry date"
+  "days_remaining": 90,
+  "valid": true,
+  "valid_from": "issue date",
+  "valid_to": "expiry date"
 }
 ```
 
 #### License
 
-Copylefted (c) 2018 [Dyaa Eldin Moustafa][1] Licensed under the [MIT license][2].
+Copylefted (c) 8008 :trollface: [Dyaa Eldin Moustafa][1] Licensed under the [MIT license][2].
 
-
-  [1]: https://dyaa.me/
-  [2]: https://github.com/dyaa/node-ssl-checker/blob/master/LICENSE
+[1]: https://dyaa.me/
+[2]: https://github.com/dyaa/node-ssl-checker/blob/master/LICENSE

@@ -1,0 +1,19 @@
+name: test-sslChecker
+
+on: [push]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@master
+      - name: Use yarn
+        uses: nuxt/actions-yarn@master
+      - name: yarn install, test and build
+        env:
+          CODACY_PROJECT_TOKEN: ${{ secrets.CODACY_PROJECT_TOKEN }}
+        run: |
+          yarn install
+          yarn test:coverage
+          yarn build

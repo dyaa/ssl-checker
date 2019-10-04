@@ -1,7 +1,0 @@
-{
-	"parser": "babel-eslint",
-	"rules": {
-		"indent": ["error", "tab"],
-		"max-len": ["error", 120]
-	}
-}
