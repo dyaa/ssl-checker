@@ -1,16 +1,31 @@
 {
   "name": "ssl-checker",
-  "version": "1.2.1",
+  "version": "2.0.2",
   "description": "ssl-checker",
-  "main": "index.js",
+  "main": "./lib/cmjs/index.js",
+  "module": "./lib/cmjs/index.js",
+  "es2015": "./lib/es2015/index.js",
+  "unpkg": "./lib/umd/index.js",
+  "types": "./lib/index.d.ts",
   "scripts": {
-    "lint": "eslint .",
-    "test": "mocha --reporter spec --require babel-register",
-    "posttest": "npm run lint"
+    "test": "jest --config jestconfig.json",
+    "test:coverage": "jest --coverage --config=jestconfig.json && cat ./coverage/lcov.info | codacy-coverage -v",
+    "build": "yarn build:es2015 && yarn build:umd && yarn build:cmjs",
+    "build:es2015": "tsc --module es2015 --outDir lib/es2015",
+    "build:umd": "tsc --module umd --outDir lib/umd",
+    "build:cmjs": "tsc --module commonjs --outDir lib/cmjs",
+    "lint": "tslint -p tsconfig.json",
+    "format": "prettier  --write '**/*.{ts,md}'",
+    "precommit": "pretty-quick --staged",
+    "prepare": "npm run build",
+    "prepublishOnly": "npm test && npm run lint",
+    "preversion": "npm run lint",
+    "version": "npm run format && git add -A src",
+    "postversion": "git push && git push --tags"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/dyaa/node-ssl-checker.git"
+    "url": "git+https://github.com/dyaa/ssl-checker.git"
   },
   "keywords": [
     "ssl",
@@ -19,15 +34,24 @@
   "author": "Dyaa Eldin <mail@dyaa.me> (https://dyaa.me)",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/dyaa/node-ssl-checker/issues"
+    "url": "https://github.com/dyaa/ssl-checker/issues"
   },
-  "homepage": "https://github.com/dyaa/node-ssl-checker#readme",
+  "homepage": "https://github.com/dyaa/ssl-checker#readme",
   "devDependencies": {
-    "babel-core": "^6.24.1",
-    "babel-eslint": "^10.0.2",
-    "babel-preset-es2015": "^6.24.1",
-    "chai": "^4.1.0",
-    "eslint": "^6.0.1",
-    "mocha": "^6.1.4"
-  }
+    "@types/jest": "^24.0.18",
+    "@types/node": "^12.7.11",
+    "codacy-coverage": "^3.4.0",
+    "codecov": "^3.5.0",
+    "jest": "^24.9.0",
+    "jest-extended": "^0.11.2",
+    "prettier": "^1.18.2",
+    "pretty-quick": "^1.11.1",
+    "ts-jest": "^24.0.2",
+    "tslint": "^5.20.0",
+    "tslint-config-prettier": "^1.18.0",
+    "typescript": "^3.6.3"
+  },
+  "files": [
+    "lib/**/*"
+  ]
 }
