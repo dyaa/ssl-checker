@@ -1,0 +1,23 @@
+{
+  "compilerOptions": {
+    "moduleResolution": "node",
+    "esModuleInterop": true,
+    "module": "commonjs",
+    "declaration": true,
+    "declarationDir": "./lib",
+    "rootDir": "src",
+    "allowJs": false,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "noImplicitReturns": true,
+    "noImplicitThis": true,
+    "noImplicitAny": true,
+    "strictNullChecks": true,
+    "suppressImplicitAnyIndexErrors": true,
+    "noErrorTruncation": true,
+    "noUnusedLocals": false,
+    "lib": ["esnext"]
+  },
+  "include": ["src/*.ts", "!src/__tests__/"],
+  "exclude": ["node_modules", "lib", "index.d.ts", "src/__tests__/"]
+}
