@@ -4,6 +4,7 @@
 [![npm version](https://badge.fury.io/js/ssl-checker.svg)](https://badge.fury.io/js/ssl-checker) [![npm](https://img.shields.io/npm/dt/ssl-checker.svg)](https://github.com/dyaa/node-ssl-checker)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/4544a598aa6b4bc99883ef655e1dd90f)](https://www.codacy.com/manual/dyaa/node-ssl-checker?utm_source=github.com&utm_medium=referral&utm_content=dyaa/node-ssl-checker&utm_campaign=Badge_Grade)
 [![Codacy Badge](https://api.codacy.com/project/badge/Coverage/4544a598aa6b4bc99883ef655e1dd90f)](https://www.codacy.com/manual/dyaa/node-ssl-checker?utm_source=github.com&utm_medium=referral&utm_content=dyaa/node-ssl-checker&utm_campaign=Badge_Coverage)
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fdyaa%2Fssl-checker.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2Fdyaa%2Fssl-checker?ref=badge_shield)
 
 ## Installation
 
@@ -54,3 +55,6 @@ Copylefted (c) 8008 :trollface: [Dyaa Eldin Moustafa][1] Licensed under the [MIT
 
 [1]: https://dyaa.me/
 [2]: https://github.com/dyaa/node-ssl-checker/blob/master/LICENSE
+
+
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fdyaa%2Fssl-checker.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2Fdyaa%2Fssl-checker?ref=badge_large)
