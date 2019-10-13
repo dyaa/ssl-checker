@@ -56,15 +56,14 @@ const sslChecker = (
             valid_to
           } = (res.connection as tls.TLSSocket).getPeerCertificate();
 
-          const validFrom = new Date(valid_from);
           const validTo = new Date(valid_to);
 
           resolve({
-            daysRemaining: getDaysRemaining(validFrom, validTo),
+            daysRemaining: getDaysRemaining(new Date(), validTo),
             valid:
               ((res.socket as { authorized?: boolean })
                 .authorized as boolean) || false,
-            validFrom: validFrom.toISOString(),
+            validFrom: new Date(valid_from).toISOString(),
             validTo: validTo.toISOString()
           });
         }
