@@ -29,7 +29,7 @@ const sslChecker = (
     agent: false,
     method: "HEAD",
     port: 443,
-    rejectUnauthorized: false
+    rejectUnauthorized: false,
   }
 ): Promise<IResolvedValues> =>
   new Promise((resolve, reject) => {
@@ -53,7 +53,7 @@ const sslChecker = (
         (res: http.IncomingMessage) => {
           const {
             valid_from,
-            valid_to
+            valid_to,
           } = (res.connection as tls.TLSSocket).getPeerCertificate();
 
           const validTo = new Date(valid_to);
@@ -64,7 +64,7 @@ const sslChecker = (
               ((res.socket as { authorized?: boolean })
                 .authorized as boolean) || false,
             validFrom: new Date(valid_from).toISOString(),
-            validTo: validTo.toISOString()
+            validTo: validTo.toISOString(),
           });
         }
       );
@@ -76,4 +76,4 @@ const sslChecker = (
     }
   });
 
-module.exports = sslChecker;
+export default sslChecker;
