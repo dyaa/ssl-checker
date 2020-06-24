@@ -41,14 +41,6 @@ describe("sslChecker", () => {
     }
   });
 
-  it("Should return 'Invalid host' when no host provided", async () => {
-    try {
-      await sslChecker();
-    } catch (e) {
-      expect(e).toEqual(new Error("Invalid host"));
-    }
-  });
-
   it("Should return 'Invalid port' when no port provided", async () => {
     try {
       await sslChecker(validSslHost, { port: "port" });
