@@ -77,3 +77,4 @@ const sslChecker = (
   });
 
 export default sslChecker;
+module.exports = sslChecker;
