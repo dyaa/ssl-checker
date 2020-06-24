@@ -33,15 +33,6 @@ const sslChecker = (
   }
 ): Promise<IResolvedValues> =>
   new Promise((resolve, reject) => {
-    const isValidHostName =
-      host &&
-      /^(([a-zA-Z0-9]|[a-zA-Z0-9][a-zA-Z0-9\-]*[a-zA-Z0-9])\.)*([A-Za-z0-9]|[A-Za-z0-9][A-Za-z0-9\-]*[A-Za-z0-9])$/.test(
-        host
-      );
-
-    if (!isValidHostName) {
-      reject(new Error("Invalid host"));
-    }
 
     if (!checkPort(options.port)) {
       reject(Error("Invalid port"));
