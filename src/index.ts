@@ -60,7 +60,9 @@ const sslChecker = (
 
           const validTo = new Date(valid_to);
 
-          const validFor = subjectaltname.replace(/DNS:/g, "").split(", ");
+          const validFor = subjectaltname
+            .replace(/DNS:|IP Address:/g, "")
+            .split(", ");
 
           resolve({
             daysRemaining: getDaysRemaining(new Date(), validTo),
