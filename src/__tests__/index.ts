@@ -4,6 +4,8 @@ const validSslHost = "badssl.com";
 const expiredSSlHost = "expired.badssl.com";
 const wrongHostDomain = "wrong.host.badssl.com";
 
+const validDomainsForValidSslHost = ["*.badssl.com", "badssl.com"];
+
 describe("sslChecker", () => {
   it("Should return valid values when valid host is passed", async () => {
     const sslDetails = await sslChecker(validSslHost);
@@ -13,7 +15,8 @@ describe("sslChecker", () => {
         daysRemaining: expect.any(Number),
         valid: true,
         validFrom: expect.any(String),
-        validTo: expect.any(String)
+        validTo: expect.any(String),
+        validFor: expect.arrayContaining(validDomainsForValidSslHost),
       })
     );
   });
