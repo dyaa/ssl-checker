@@ -44,7 +44,8 @@ sslChecker("dyaa.me", { method: "GET", port: 443 }).then(console.info);
   "daysRemaining": 90,
   "valid": true,
   "validFrom": "issue date",
-  "validTo": "expiry date"
+  "validTo": "expiry date",
+  "validFor": ["www.example.com", "example.com"]
 }
 ```
 
