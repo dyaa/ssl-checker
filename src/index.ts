@@ -68,6 +68,10 @@ const sslChecker = (
       );
 
       req.on("error", reject);
+      req.on("timeout", () => {
+          req.abort()
+          reject(new Error('Timed Out'))
+      });
       req.end();
     } catch (e) {
       reject(e);
