@@ -49,6 +49,11 @@ const sslChecker = (
             subjectaltname,
           } = (res.connection as tls.TLSSocket).getPeerCertificate();
 
+          if (!valid_from || !valid_to || !subjectaltname) {
+            reject(new Error('No certificate'));
+            return;
+          }
+
           const validTo = new Date(valid_to);
 
           const validFor = subjectaltname
