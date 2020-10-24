@@ -1,6 +1,6 @@
 {
   "name": "ssl-checker",
-  "version": "2.0.5",
+  "version": "2.0.6",
   "description": "ssl-checker",
   "main": "./lib/cmjs/index.js",
   "module": "./lib/cmjs/index.js",
