@@ -27,11 +27,14 @@ const getSslDetails = async (hostname: string) =>
 
 ## Options
 
-| Option | Default |                                                    |
-| ------ | ------- | -------------------------------------------------- |
-| method | HEAD    | can be GET too                                     |
-| port   | 443     | Your ssl entrypoint                                |
-| agent  |         | I dont know why but if you'd like provide agent id |
+All valid `https.RequestOptions` values.
+
+| Option             | Default | Description                                        |
+| ------------------ | ------- | -------------------------------------------------- |
+| method             | HEAD    | Can be GET too                                     |
+| port               | 443     | Your SSL/TLS entry point                           |
+| agent              | default | Default HTTPS agent with { maxCachedSessions: 0 }  |
+| rejectUnauthorized | false   | Skips authorization by default                     |
 
 ```ts
 sslChecker("dyaa.me", { method: "GET", port: 443 }).then(console.info);
