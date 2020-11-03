@@ -24,19 +24,25 @@ const getDaysRemaining = (validFrom: Date, validTo: Date): number => {
   return daysRemaining;
 };
 
+const DEFAULT_OPTIONS: Partial<https.RequestOptions> = {
+  agent: new https.Agent({
+    maxCachedSessions: 0
+  }),
+  method: "HEAD",
+  port: 443,
+  rejectUnauthorized: false,
+};
+
 const sslChecker = (
   host: string,
-  options: Partial<https.RequestOptions> = {
-    agent: false,
-    method: "HEAD",
-    port: 443,
-    rejectUnauthorized: false,
-  }
+  options: Partial<https.RequestOptions> = {}
 ): Promise<IResolvedValues> =>
   new Promise((resolve, reject) => {
+    options = Object.assign({}, DEFAULT_OPTIONS, options);
 
     if (!checkPort(options.port)) {
       reject(Error("Invalid port"));
+      return;
     }
 
     try {

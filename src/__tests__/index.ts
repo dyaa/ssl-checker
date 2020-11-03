@@ -21,6 +21,18 @@ describe("sslChecker", () => {
     );
   });
 
+  it("Should work on subsequent calls for the same domain", async () => {
+    await sslChecker(validSslHost);
+    await new Promise((r) => setTimeout(r, 1000));
+    const sslDetails = await sslChecker(validSslHost);
+
+    expect(sslDetails).toEqual(
+      expect.objectContaining({
+        valid: true,
+      })
+    );
+  });
+
   it("Should return valid = false when provided an expired domain", async () => {
     const sslDetails = await sslChecker(expiredSSlHost);
 
