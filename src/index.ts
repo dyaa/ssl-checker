@@ -8,6 +8,7 @@ interface IResolvedValues {
   validTo: string;
   daysRemaining: number;
   validFor: string[];
+  issuer: string;
 }
 
 const checkPort = (port: unknown): boolean =>
@@ -53,9 +54,10 @@ const sslChecker = (
             valid_from,
             valid_to,
             subjectaltname,
+            issuer,
           } = (res.connection as tls.TLSSocket).getPeerCertificate();
 
-          if (!valid_from || !valid_to || !subjectaltname) {
+          if (!valid_from || !valid_to || !subjectaltname || !issuer) {
             reject(new Error('No certificate'));
             return;
           }
@@ -74,6 +76,7 @@ const sslChecker = (
             validFrom: new Date(valid_from).toISOString(),
             validTo: validTo.toISOString(),
             validFor,
+            issuer: issuer.O, // return the issuing organization
           });
         }
       );

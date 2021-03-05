@@ -17,6 +17,7 @@ describe("sslChecker", () => {
         validFrom: expect.any(String),
         validTo: expect.any(String),
         validFor: expect.arrayContaining(validDomainsForValidSslHost),
+        issuer: expect.any(String),
       })
     );
   });
