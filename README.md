@@ -48,7 +48,8 @@ sslChecker("dyaa.me", { method: "GET", port: 443 }).then(console.info);
   "valid": true,
   "validFrom": "issue date",
   "validTo": "expiry date",
-  "validFor": ["www.example.com", "example.com"]
+  "validFor": ["www.example.com", "example.com"],
+  "issuer": "DigiCert Inc"
 }
 ```
 
