@@ -39,7 +39,7 @@
   "homepage": "https://github.com/dyaa/ssl-checker#readme",
   "devDependencies": {
     "@types/jest": "^26.0.14",
-    "@types/node": "^15.0.2",
+    "@types/node": "^16.4.0",
     "codacy-coverage": "^3.4.0",
     "codecov": "^3.5.0",
     "jest": "^24.9.0",
