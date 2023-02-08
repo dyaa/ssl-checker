@@ -1,14 +1,3 @@
-*.csv.dat
-*.iml
-*.log
-*.out
-*.pid
-*.seed
-*.sublime-*
-*.swo
-*.swp
-*.tgz
-*.xml
 .DS_Store
 .idea
 .project

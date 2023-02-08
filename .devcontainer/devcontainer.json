@@ -1,0 +1,4 @@
+{
+    "image": "mcr.microsoft.com/vscode/devcontainers/typescript-node:18-bullseye",
+	"postCreateCommand": "npm install"
+}

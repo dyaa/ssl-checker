@@ -2,9 +2,8 @@
   "compilerOptions": {
     "moduleResolution": "node",
     "esModuleInterop": true,
-    "module": "commonjs",
-    "declaration": true,
-    "declarationDir": "./lib",
+    "module": "esnext",
+    "declaration": false,
     "rootDir": "src",
     "allowJs": false,
     "skipLibCheck": true,
@@ -18,6 +17,6 @@
     "noUnusedLocals": false,
     "lib": ["esnext"]
   },
-  "include": ["src/*.ts", "!src/__tests__/"],
-  "exclude": ["node_modules", "lib", "index.d.ts", "src/__tests__/"]
+  "include": ["src/*.ts"],
+  "exclude": ["node_modules", "lib", "src/*.test.*"]
 }
