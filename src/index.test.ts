@@ -1,4 +1,6 @@
-import sslChecker from "../";
+import { expect, describe, it } from "vitest";
+
+import sslChecker from "./";
 
 const validSslHost = "badssl.com";
 const expiredSSlHost = "expired.badssl.com";
@@ -38,7 +40,7 @@ describe("sslChecker", () => {
 
     expect(sslDetails).toEqual(
       expect.objectContaining({
-        valid: false
+        valid: false,
       })
     );
   });

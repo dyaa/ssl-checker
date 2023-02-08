@@ -1,6 +1,6 @@
 import * as http from "http";
 import * as https from "https";
-import * as tls from "tls";
+import type { TLSSocket } from "tls";
 
 interface IResolvedValues {
   valid: boolean;
@@ -26,7 +26,7 @@ const getDaysRemaining = (validFrom: Date, validTo: Date): number => {
 
 const DEFAULT_OPTIONS: Partial<https.RequestOptions> = {
   agent: new https.Agent({
-    maxCachedSessions: 0
+    maxCachedSessions: 0,
   }),
   method: "HEAD",
   port: 443,
@@ -49,19 +49,16 @@ const sslChecker = (
       const req = https.request(
         { host, ...options },
         (res: http.IncomingMessage) => {
-          const {
-            valid_from,
-            valid_to,
-            subjectaltname,
-          } = (res.connection as tls.TLSSocket).getPeerCertificate();
+          const { valid_from, valid_to, subjectaltname } = (
+            res.socket as TLSSocket
+          ).getPeerCertificate();
 
           if (!valid_from || !valid_to || !subjectaltname) {
-            reject(new Error('No certificate'));
+            reject(new Error("No certificate"));
             return;
           }
 
           const validTo = new Date(valid_to);
-
           const validFor = subjectaltname
             .replace(/DNS:|IP Address:/g, "")
             .split(", ");
@@ -80,8 +77,8 @@ const sslChecker = (
 
       req.on("error", reject);
       req.on("timeout", () => {
-          req.abort()
-          reject(new Error('Timed Out'))
+        req.destroy();
+        reject(new Error("Timed Out"));
       });
       req.end();
     } catch (e) {
@@ -90,4 +87,3 @@ const sslChecker = (
   });
 
 export default sslChecker;
-module.exports = sslChecker;
