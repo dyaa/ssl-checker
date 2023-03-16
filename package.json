@@ -34,7 +34,7 @@
   "devDependencies": {
     "@rollup/plugin-typescript": "^11.0.0",
     "@types/node": "^18.13.0",
-    "@vitest/coverage-istanbul": "^0.28.4",
+    "@vitest/coverage-istanbul": "^0.29.3",
     "codacy-coverage": "^3.2.0",
     "prettier": "^2.0.4",
     "pretty-quick": "^3.0.2",
