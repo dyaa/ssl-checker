@@ -40,7 +40,7 @@
     "pretty-quick": "^3.0.2",
     "rollup": "^3.14.0",
     "typescript": "^4.9.5",
-    "vitest": "^0.28.4"
+    "vitest": "^0.31.1"
   },
   "files": [
     "lib/**/*"
