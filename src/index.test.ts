@@ -3,8 +3,7 @@ import * as fs from 'fs';
 
 import sslChecker from "./";
 
-const wordpressHost = "developer.wordpress.org";
-
+const githubHost = "github.com";
 const validSslHost = "badssl.com";
 const expiredSSlHost = "expired.badssl.com";
 const wrongHostDomain = "wrong.host.badssl.com";
@@ -70,7 +69,7 @@ describe("sslChecker", () => {
     if (process.platform !== 'linux') return
     await new Promise((r) => setTimeout(r, 2000));
     const openFdsBefore = fs.readdirSync('/proc/self/fd').length - 1;
-    await sslChecker(wordpressHost, { method: "HEAD", port: 443 })
+    await sslChecker(githubHost, { method: "HEAD", port: 443 })
     await new Promise((r) => setTimeout(r, 1000));
     const openFdsAfter = fs.readdirSync('/proc/self/fd').length - 1;
     expect(openFdsBefore).toEqual(openFdsAfter);
@@ -80,7 +79,7 @@ describe("sslChecker", () => {
     if (process.platform !== 'linux') return
     await new Promise((r) => setTimeout(r, 2000));
     const openFdsBefore = fs.readdirSync('/proc/self/fd').length - 1;
-    await sslChecker(wordpressHost, { method: "GET", port: 443 })
+    await sslChecker(githubHost, { method: "GET", port: 443 })
     await new Promise((r) => setTimeout(r, 1000));
     const openFdsAfter = fs.readdirSync('/proc/self/fd').length - 1;
     expect(openFdsBefore).toEqual(openFdsAfter);
