@@ -52,6 +52,7 @@ const sslChecker = (
           const { valid_from, valid_to, subjectaltname } = (
             res.socket as TLSSocket
           ).getPeerCertificate();
+          res.socket.destroy();
 
           if (!valid_from || !valid_to || !subjectaltname) {
             reject(new Error("No certificate"));

@@ -1,6 +1,9 @@
 import { expect, describe, it } from "vitest";
+import * as fs from 'fs';
 
 import sslChecker from "./";
+
+const wordpressHost = "developer.wordpress.org";
 
 const validSslHost = "badssl.com";
 const expiredSSlHost = "expired.badssl.com";
@@ -61,5 +64,25 @@ describe("sslChecker", () => {
     } catch (e) {
       expect(e).toEqual(new Error("Invalid port"));
     }
+  });
+
+  it("Should not leak socket file descriptors with a head request", async () => {
+    if (process.platform !== 'linux') return
+    await new Promise((r) => setTimeout(r, 2000));
+    const openFdsBefore = fs.readdirSync('/proc/self/fd').length - 1;
+    await sslChecker(wordpressHost, { method: "HEAD", port: 443 })
+    await new Promise((r) => setTimeout(r, 1000));
+    const openFdsAfter = fs.readdirSync('/proc/self/fd').length - 1;
+    expect(openFdsBefore).toEqual(openFdsAfter);
+  });
+
+  it("Should not leak socket file descriptors with a get request", async () => {
+    if (process.platform !== 'linux') return
+    await new Promise((r) => setTimeout(r, 2000));
+    const openFdsBefore = fs.readdirSync('/proc/self/fd').length - 1;
+    await sslChecker(wordpressHost, { method: "GET", port: 443 })
+    await new Promise((r) => setTimeout(r, 1000));
+    const openFdsAfter = fs.readdirSync('/proc/self/fd').length - 1;
+    expect(openFdsBefore).toEqual(openFdsAfter);
   });
 });
