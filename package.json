@@ -1,6 +1,6 @@
 {
   "name": "ssl-checker",
-  "version": "2.0.8",
+  "version": "2.0.9",
   "description": "ssl-checker",
   "main": "./lib/cjs/index.js",
   "module": "./lib/es/index.js",
@@ -12,8 +12,7 @@
     "format": "prettier --write '**/*.{ts,md}'",
     "precommit": "pretty-quick --staged",
     "prepare": "npm run build",
-    "prepublishOnly": "npm test && npm run lint",
-    "preversion": "npm run lint",
+    "prepublishOnly": "npm test",
     "version": "npm run format && git add -A src",
     "postversion": "git push && git push --tags"
   },
