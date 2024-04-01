@@ -32,7 +32,7 @@
   "homepage": "https://github.com/dyaa/ssl-checker#readme",
   "devDependencies": {
     "@rollup/plugin-typescript": "^11.0.0",
-    "@types/node": "^18.13.0",
+    "@types/node": "^20.12.2",
     "@vitest/coverage-istanbul": "^0.28.4",
     "codacy-coverage": "^3.2.0",
     "prettier": "^2.0.4",
