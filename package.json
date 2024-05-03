@@ -1,6 +1,6 @@
 {
   "name": "ssl-checker",
-  "version": "2.0.9",
+  "version": "2.0.10",
   "description": "ssl-checker",
   "main": "./lib/cjs/index.js",
   "module": "./lib/es/index.js",

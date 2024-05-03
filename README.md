@@ -21,11 +21,13 @@ $ yarn add ssl-checker
 ```ts
 import sslChecker from "ssl-checker";
 
-const getSslDetails = async (hostname: string) =>
-  await sslChecker(hostname`ex. badssl.com`);
+const getSslDetails = async (hostname: string, validateSubjectAltName: boolean) =>
+  await sslChecker(hostname`ex. badssl.com`, validateSubjectAltName`true`);
 ```
 
 ## Options
+
+* `validateSubjectAltName` - If true, requires `subjectaltname` (an optional certificate field) to exist in certificate during validity check.
 
 All valid `https.RequestOptions` values.
 
@@ -37,7 +39,7 @@ All valid `https.RequestOptions` values.
 | rejectUnauthorized | false   | Skips authorization by default                    |
 
 ```ts
-sslChecker("dyaa.me", { method: "GET", port: 443 }).then(console.info);
+sslChecker("dyaa.me", true, { method: "GET", port: 443 }).then(console.info);
 ```
 
 ## Response Example
