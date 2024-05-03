@@ -35,6 +35,7 @@ const DEFAULT_OPTIONS: Partial<https.RequestOptions> = {
 
 const sslChecker = (
   host: string,
+  validateSubjectAltName: boolean,
   options: Partial<https.RequestOptions> = {}
 ): Promise<IResolvedValues> =>
   new Promise((resolve, reject) => {
@@ -54,15 +55,22 @@ const sslChecker = (
           ).getPeerCertificate();
           res.socket.destroy();
 
-          if (!valid_from || !valid_to || !subjectaltname) {
-            reject(new Error("No certificate"));
-            return;
+          if (validateSubjectAltName) {
+            if (!valid_from || !valid_to || !subjectaltname) {
+              reject(new Error("No certificate"));
+              return;
+            }
+          } else {
+            if (!valid_from || !valid_to) {
+              reject(new Error("No certificate"));
+              return;
+            }
           }
 
           const validTo = new Date(valid_to);
-          const validFor = subjectaltname
+          const validFor = subjectaltname ? subjectaltname
             .replace(/DNS:|IP Address:/g, "")
-            .split(", ");
+            .split(", ") : null;
 
           resolve({
             daysRemaining: getDaysRemaining(new Date(), validTo),
