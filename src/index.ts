@@ -31,11 +31,11 @@ const DEFAULT_OPTIONS: Partial<https.RequestOptions> = {
   method: "HEAD",
   port: 443,
   rejectUnauthorized: false,
+  validateSubjectAltName: false
 };
 
 const sslChecker = (
   host: string,
-  validateSubjectAltName: boolean,
   options: Partial<https.RequestOptions> = {}
 ): Promise<IResolvedValues> =>
   new Promise((resolve, reject) => {
@@ -47,49 +47,77 @@ const sslChecker = (
     }
 
     try {
-      const req = https.request(
-        { host, ...options },
-        (res: http.IncomingMessage) => {
-          const { valid_from, valid_to, subjectaltname } = (
-            res.socket as TLSSocket
-          ).getPeerCertificate();
-          res.socket.destroy();
+      if (options.validateSubjectAltName) {
+        const req = https.request(
+          { host, ...options },
+          (res: http.IncomingMessage) => {
+            let { valid_from, valid_to, subjectaltname } = (
+              res.socket as TLSSocket
+            ).getPeerCertificate();
+            res.socket.destroy();
 
-          if (validateSubjectAltName) {
             if (!valid_from || !valid_to || !subjectaltname) {
               reject(new Error("No certificate"));
               return;
             }
-          } else {
+
+            const validTo = new Date(valid_to);
+            const validFor = subjectaltname
+              .replace(/DNS:|IP Address:/g, "")
+              .split(", ");
+
+            resolve({
+              daysRemaining: getDaysRemaining(new Date(), validTo),
+              valid:
+                ((res.socket as { authorized?: boolean })
+                  .authorized as boolean) || false,
+              validFrom: new Date(valid_from).toISOString(),
+              validTo: validTo.toISOString(),
+              validFor,
+            });
+          }
+        );
+
+        req.on("error", reject);
+        req.on("timeout", () => {
+          req.destroy();
+          reject(new Error("Timed Out"));
+        });
+        req.end();
+      } else {
+        const req = https.request(
+          { host, ...options },
+          (res: http.IncomingMessage) => {
+            let { valid_from, valid_to } = (
+              res.socket as TLSSocket
+            ).getPeerCertificate();
+            res.socket.destroy();
+
+
             if (!valid_from || !valid_to) {
               reject(new Error("No certificate"));
               return;
             }
+
+            const validTo = new Date(valid_to);
+
+            resolve({
+              daysRemaining: getDaysRemaining(new Date(), validTo),
+              valid:
+                ((res.socket as { authorized?: boolean })
+                  .authorized as boolean) || false,
+              validFrom: new Date(valid_from).toISOString(),
+              validTo: validTo.toISOString()
+            });
           }
-
-          const validTo = new Date(valid_to);
-          const validFor = subjectaltname ? subjectaltname
-            .replace(/DNS:|IP Address:/g, "")
-            .split(", ") : null;
-
-          resolve({
-            daysRemaining: getDaysRemaining(new Date(), validTo),
-            valid:
-              ((res.socket as { authorized?: boolean })
-                .authorized as boolean) || false,
-            validFrom: new Date(valid_from).toISOString(),
-            validTo: validTo.toISOString(),
-            validFor,
-          });
-        }
-      );
-
-      req.on("error", reject);
-      req.on("timeout", () => {
-        req.destroy();
-        reject(new Error("Timed Out"));
-      });
-      req.end();
+        );
+        req.on("error", reject);
+        req.on("timeout", () => {
+          req.destroy();
+          reject(new Error("Timed Out"));
+        });
+        req.end();
+      }
     } catch (e) {
       reject(e);
     }

@@ -12,7 +12,7 @@ const validDomainsForValidSslHost = ["*.badssl.com", "badssl.com"];
 
 describe("sslChecker", () => {
   it("Should return valid values when valid host is passed", async () => {
-    const sslDetails = await sslChecker(validSslHost);
+    const sslDetails = await sslChecker(validSslHost, {validateSubjectAltName: true});
 
     expect(sslDetails).toEqual(
       expect.objectContaining({
@@ -43,6 +43,19 @@ describe("sslChecker", () => {
     expect(sslDetails).toEqual(
       expect.objectContaining({
         valid: false,
+      })
+    );
+  });
+
+  it("Should allow for specifying `subjectaltname` as a non required field for cert validity", async () => {
+    const sslDetails = await sslChecker(validSslHost, {validateSubjectAltName: false});
+
+    expect(sslDetails).toEqual(
+      expect.objectContaining({
+        daysRemaining: expect.any(Number),
+        valid: true,
+        validFrom: expect.any(String),
+        validTo: expect.any(String),
       })
     );
   });
