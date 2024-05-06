@@ -21,22 +21,21 @@ $ yarn add ssl-checker
 ```ts
 import sslChecker from "ssl-checker";
 
-const getSslDetails = async (hostname: string, validateSubjectAltName: boolean) =>
-  await sslChecker(hostname`ex. badssl.com`, validateSubjectAltName`true`);
+const getSslDetails = async (hostname: string) =>
+  await sslChecker(hostname`ex. badssl.com`);
 ```
 
 ## Options
 
-* `validateSubjectAltName` - If true, requires `subjectaltname` (an optional certificate field) to exist in certificate during validity check.
-
 All valid `https.RequestOptions` values.
 
-| Option             | Default | Description                                       |
-| ------------------ | ------- | ------------------------------------------------- |
-| method             | HEAD    | Can be GET too                                    |
-| port               | 443     | Your SSL/TLS entry point                          |
-| agent              | default | Default HTTPS agent with { maxCachedSessions: 0 } |
-| rejectUnauthorized | false   | Skips authorization by default                    |
+| Option                 | Default | Description                                       |
+| ------------------     | ------- | ------------------------------------------------- |
+| method                 | HEAD    | Can be GET too                                    |
+| port                   | 443     | Your SSL/TLS entry point                          |
+| agent                  | default | Default HTTPS agent with { maxCachedSessions: 0 } |
+| rejectUnauthorized     | false   | Skips authorization by default                    |
+| validateSubjectAltName | false   | Skips returning/validating `subjectaltname`       |
 
 ```ts
 sslChecker("dyaa.me", true, { method: "GET", port: 443 }).then(console.info);
@@ -53,6 +52,8 @@ sslChecker("dyaa.me", true, { method: "GET", port: 443 }).then(console.info);
   "validFor": ["www.example.com", "example.com"]
 }
 ```
+
+**NOTE: `validFor` is only returned if `validateSubjectAltName` is set to `true`**
 
 #### License
 
