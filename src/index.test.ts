@@ -4,15 +4,12 @@ import * as fs from 'fs';
 import sslChecker from "./";
 
 const githubHost = "github.com";
-const validSslHost = "badssl.com";
 const expiredSSlHost = "expired.badssl.com";
 const wrongHostDomain = "wrong.host.badssl.com";
 
-const validDomainsForValidSslHost = ["*.badssl.com", "badssl.com"];
-
 describe("sslChecker", () => {
   it("Should return valid values when valid host is passed", async () => {
-    const sslDetails = await sslChecker(validSslHost, {validateSubjectAltName: true});
+    const sslDetails = await sslChecker(githubHost, {validateSubjectAltName: true});
 
     expect(sslDetails).toEqual(
       expect.objectContaining({
@@ -20,15 +17,15 @@ describe("sslChecker", () => {
         valid: true,
         validFrom: expect.any(String),
         validTo: expect.any(String),
-        validFor: expect.arrayContaining(validDomainsForValidSslHost),
+        validFor: expect.arrayContaining(["github.com", "www.github.com"]),
       })
     );
   });
 
   it("Should work on subsequent calls for the same domain", async () => {
-    await sslChecker(validSslHost);
+    await sslChecker(githubHost);
     await new Promise((r) => setTimeout(r, 1000));
-    const sslDetails = await sslChecker(validSslHost);
+    const sslDetails = await sslChecker(githubHost);
 
     expect(sslDetails).toEqual(
       expect.objectContaining({
@@ -48,7 +45,7 @@ describe("sslChecker", () => {
   });
 
   it("Should allow for specifying `subjectaltname` as a non required field for cert validity", async () => {
-    const sslDetails = await sslChecker(validSslHost, {validateSubjectAltName: false});
+    const sslDetails = await sslChecker(githubHost, {validateSubjectAltName: false});
 
     expect(sslDetails).toEqual(
       expect.objectContaining({
@@ -72,7 +69,7 @@ describe("sslChecker", () => {
 
   it("Should return 'Invalid port' when no port provided", async () => {
     try {
-      await sslChecker(validSslHost, { port: "port" });
+      await sslChecker(githubHost, { port: "port" });
     } catch (e) {
       expect(e).toEqual(new Error("Invalid port"));
     }

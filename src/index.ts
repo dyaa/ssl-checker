@@ -7,7 +7,7 @@ interface IResolvedValues {
   validFrom: string;
   validTo: string;
   daysRemaining: number;
-  validFor: string[];
+  validFor?: string[];
 }
 
 const checkPort = (port: unknown): boolean =>
@@ -24,7 +24,9 @@ const getDaysRemaining = (validFrom: Date, validTo: Date): number => {
   return daysRemaining;
 };
 
-const DEFAULT_OPTIONS: Partial<https.RequestOptions> = {
+type Options = https.RequestOptions & { validateSubjectAltName?:boolean };
+
+const DEFAULT_OPTIONS: Partial<Options> = {
   agent: new https.Agent({
     maxCachedSessions: 0,
   }),
@@ -36,7 +38,7 @@ const DEFAULT_OPTIONS: Partial<https.RequestOptions> = {
 
 const sslChecker = (
   host: string,
-  options: Partial<https.RequestOptions> = {}
+  options: Partial<Options> = {}
 ): Promise<IResolvedValues> =>
   new Promise((resolve, reject) => {
     options = Object.assign({}, DEFAULT_OPTIONS, options);
