@@ -38,7 +38,7 @@ All valid `https.RequestOptions` values.
 | validateSubjectAltName | false   | Skips returning/validating `subjectaltname`       |
 
 ```ts
-sslChecker("dyaa.me", true, { method: "GET", port: 443 }).then(console.info);
+sslChecker("dyaa.me", { method: "GET", port: 443 }).then(console.info);
 ```
 
 ## Response Example
