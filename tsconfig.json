@@ -12,10 +12,11 @@
     "noImplicitThis": true,
     "noImplicitAny": true,
     "strictNullChecks": true,
-    "suppressImplicitAnyIndexErrors": true,
     "noErrorTruncation": true,
     "noUnusedLocals": false,
-    "lib": ["esnext"]
+    "ignoreDeprecations": "6.0",
+    "lib": ["esnext"],
+    "types": ["node"]
   },
   "include": ["src/*.ts"],
   "exclude": ["node_modules", "lib", "src/*.test.*"]

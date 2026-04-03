@@ -1,16 +1,29 @@
 {
   "name": "ssl-checker",
-  "version": "2.0.10",
-  "description": "ssl-checker",
+  "version": "3.0.0",
+  "description": "Zero-dependency SSL/TLS certificate checker for Node.js — HTTPS, SMTP, IMAP, POP3, FTP via STARTTLS",
+  "bin": {
+    "ssl-checker": "./lib/cjs/cli.js"
+  },
   "main": "./lib/cjs/index.js",
   "module": "./lib/es/index.js",
   "types": "./lib/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./lib/es/index.js",
+      "require": "./lib/cjs/index.js",
+      "types": "./lib/index.d.ts"
+    }
+  },
+  "engines": {
+    "node": ">=18"
+  },
   "scripts": {
-    "test": "vitest",
-    "test:coverage": "vitest run --coverage && cat ./coverage/lcov.info | codacy-coverage -v",
-    "build": "tsc --project tsconfig.types.json && rollup -c --configPlugin typescript --perf",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage",
+    "build": "tsc --project tsconfig.types.json && rollup -c --configPlugin typescript",
     "format": "prettier --write '**/*.{ts,md}'",
-    "precommit": "pretty-quick --staged",
     "prepare": "npm run build",
     "prepublishOnly": "npm test",
     "version": "npm run format && git add -A src",
@@ -22,7 +35,13 @@
   },
   "keywords": [
     "ssl",
-    "checker"
+    "tls",
+    "certificate",
+    "checker",
+    "https",
+    "expiry",
+    "security",
+    "cli"
   ],
   "author": "Dyaa Eldin <mail@dyaa.me> (https://dyaa.me)",
   "license": "MIT",
@@ -31,15 +50,14 @@
   },
   "homepage": "https://github.com/dyaa/ssl-checker#readme",
   "devDependencies": {
-    "@rollup/plugin-typescript": "^11.0.0",
-    "@types/node": "^18.13.0",
-    "@vitest/coverage-istanbul": "^0.28.4",
-    "codacy-coverage": "^3.2.0",
-    "prettier": "^2.0.4",
-    "pretty-quick": "^3.0.2",
-    "rollup": "^3.14.0",
-    "typescript": "^4.9.5",
-    "vitest": "^1.3.1"
+    "@rollup/plugin-typescript": "^12.3.0",
+    "@types/node": "^25.5.2",
+    "@vitest/coverage-istanbul": "^4.1.2",
+    "prettier": "^3.8.1",
+    "rollup": "^4.60.1",
+    "tslib": "^2.8.1",
+    "typescript": "^6.0.2",
+    "vitest": "^4.1.2"
   },
   "files": [
     "lib/**/*"
