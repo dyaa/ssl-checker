@@ -1,6 +1,6 @@
 {
   "name": "ssl-checker",
-  "version": "3.0.0-rc",
+  "version": "3.0.0",
   "description": "Zero-dependency SSL/TLS certificate checker for Node.js — HTTPS, SMTP, IMAP, POP3, FTP via STARTTLS",
   "bin": {
     "ssl-checker": "./lib/cjs/cli.js"
