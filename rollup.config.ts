@@ -1,18 +1,32 @@
 import { defineConfig } from "rollup";
 import typescript from "@rollup/plugin-typescript";
+import { writeFileSync } from "fs";
 
 export default defineConfig([
   {
     input: "src/index.ts",
     output: [
-      { file: "lib/es/index.js", format: "module" },
+      { file: "lib/es/index.mjs", format: "module" },
       { file: "lib/cjs/index.js", format: "commonjs" },
     ],
     external: ["https", "tls", "net"],
     watch: {
       include: "src/**",
     },
-    plugins: [typescript()],
+    plugins: [
+      typescript(),
+      {
+        name: "esm-package-json",
+        writeBundle(options) {
+          if (options.format === "es") {
+            writeFileSync(
+              "lib/es/package.json",
+              '{\n  "type": "module"\n}\n',
+            );
+          }
+        },
+      },
+    ],
   },
   {
     input: "src/cli.ts",

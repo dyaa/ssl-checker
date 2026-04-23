@@ -74,7 +74,9 @@ const DEFAULT_PORTS: Record<Protocol, number> = {
 };
 
 const checkPort = (port: unknown): boolean =>
-  !isNaN(parseFloat(port as string)) && Math.sign(port as number) === 1;
+  !isNaN(parseFloat(port as string)) &&
+  Math.sign(port as number) === 1 &&
+  (port as number) <= 65535;
 
 const getDaysBetween = (validFrom: Date, validTo: Date): number =>
   Math.round(Math.abs(+validFrom - +validTo) / 8.64e7);
