@@ -51,7 +51,7 @@
   "homepage": "https://github.com/dyaa/ssl-checker#readme",
   "devDependencies": {
     "@rollup/plugin-typescript": "^12.3.0",
-    "@types/node": "^25.6.0",
+    "@types/node": "^26.1.0",
     "@vitest/coverage-istanbul": "^4.1.5",
     "prettier": "^3.8.3",
     "rollup": "^4.60.2",
